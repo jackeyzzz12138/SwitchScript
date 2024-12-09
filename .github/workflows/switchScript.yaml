@@ -8,7 +8,8 @@ on:
       - 'README.md'
       - 'switchScript.sh'
   schedule:
-    - cron: 0 8 * * *
+    - cron: 0 8 * * 0
+  workflow_dispatch: # 添加手动触发选项
 
 env:
   SCRIPT_SH: switchScript.sh
@@ -17,6 +18,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    # permissions:
+    #   contents: read
 
     steps:
     - name: Checkout

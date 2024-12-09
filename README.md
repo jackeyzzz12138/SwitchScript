@@ -4,7 +4,7 @@
 
 - 下载最新：
   - 大气层三件套
-    - [x] `Atmosphere + Fusee` [From Here](https://github.com/Atmosphere-NX/Atmosphere/releases/latest)
+    - [x] `Atmosphere + Fusee` **(pre-release)** [From Here](https://github.com/Atmosphere-NX/Atmosphere/releases/latest) 
     - [x] `Hekate + Nyx 简体中文` [From Here](https://github.com/easyworld/hekate/releases/latest)
     - [x] `Sigpatches` [From Here](https://hackintendo.com/download/sigpatches/)
   - Payload插件

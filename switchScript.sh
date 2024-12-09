@@ -3,7 +3,7 @@ set -e
 
 ### Credit to the Authors at https://rentry.org/CFWGuides
 ### Script created by Fraxalotl
-### Mod by huangqian8
+### Mod by huangqian8, jackey12138
 
 # -------------------------------------------
 
@@ -44,13 +44,12 @@ mkdir -p ./SwitchSD/switch/.packages
 
 cd SwitchSD
 
-### Fetch latest atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
-  | jq '.name' \
+### Fetch pre-release atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/ 
+curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases \
+  | jq -r 'map(select(.prerelease == true)) | .[0].name' \
   | xargs -I {} echo {} >> ../description.txt
-curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*atmosphere[^"]*.zip' \
-  | sed 's/"//g' \
+curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases \
+  | jq -r 'map(select(.prerelease == true)) | .[0].assets[] | select(.name | contains("atmosphere")).browser_download_url' \
   | xargs -I {} curl -sL {} -o atmosphere.zip
 if [ $? -ne 0 ]; then
     echo "atmosphere download\033[31m failed\033[0m."
@@ -60,10 +59,9 @@ else
     rm atmosphere.zip
 fi
 
-### Fetch latest fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/latest
-curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases/latest \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*fusee.bin"' \
-  | sed 's/"//g' \
+### Fetch pre-release fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/
+curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases \
+  | jq -r 'map(select(.prerelease == true)) | .[0].assets[] | select(.name | contains("fusee")).browser_download_url' \
   | xargs -I {} curl -sL {} -o fusee.bin
 if [ $? -ne 0 ]; then
     echo "fusee download\033[31m failed\033[0m."
