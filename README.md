@@ -1,14 +1,23 @@
 # 大气层个人整合包生成脚本
 
+本修改版亮点：  
+- 本仓库使用的组件并不追求稳定，会优先使用**pre-release**的版本，如有因beta版本造成的错误请自己排查。
+
+- 由于DBI(7xx)之后不再支持中文/English，决定停止使用最新版本，改为使用658
+
+美中不足：
+- sigpatches 要手动更新，不然会有报错，
+或者注释掉 ini 文件中的 kip1patch=nosigchk 以绝后患。
+
 ## 功能如下：
 
 - 下载最新：
   - 大气层三件套
     - [x] `Atmosphere + Fusee` **(pre-release)** [From Here](https://github.com/Atmosphere-NX/Atmosphere/releases/latest) 
     - [x] `Hekate + Nyx 简体中文` [From Here](https://github.com/easyworld/hekate/releases/latest)
-    - [x] `Sigpatches` [From Here](https://hackintendo.com/download/sigpatches/)
+    - [x] `Sigpatches` **(pre-release)** [From Here](https://hackintendo.com/download/sigpatches/)
   - Payload插件
-    - [x] 主机系统的密钥提取工具 `Lockpick_RCM`
+    - [x] 主机系统的密钥提取工具 `Lockpick_RCM` [From Here](https://github.com/saneki/Lockpick_RCM/releases)
     - [x] Hekate下的文件管理工具 `TegraExplorer` [From Here](https://github.com/suchmememanyskill/TegraExplorer/releases/latest)
     - [x] Hekate下删除主题和关闭插件自动启动 `CommonProblemResolver` [From Here](https://github.com/zdm65477730/CommonProblemResolver/releases/latest)
   - Nro插件
@@ -102,3 +111,6 @@
 
 ## 截图
 ![](https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/screenshot/screenshot.png)
+
+## 致谢
+@huangqian8

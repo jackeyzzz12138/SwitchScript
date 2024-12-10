@@ -46,10 +46,10 @@ cd SwitchSD
 
 ### Fetch pre-release atmosphere from https://github.com/Atmosphere-NX/Atmosphere/releases/ 
 curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases \
-  | jq -r 'map(select(.prerelease == true)) | .[0].name' \
+  | jq -r '.[0].name' \
   | xargs -I {} echo {} >> ../description.txt
 curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases \
-  | jq -r 'map(select(.prerelease == true)) | .[0].assets[] | select(.name | contains("atmosphere")).browser_download_url' \
+  | jq -r '.[0].assets[] | select(.name | contains("atmosphere")).browser_download_url' \
   | xargs -I {} curl -sL {} -o atmosphere.zip
 if [ $? -ne 0 ]; then
     echo "atmosphere download\033[31m failed\033[0m."
@@ -61,7 +61,7 @@ fi
 
 ### Fetch pre-release fusee.bin from https://github.com/Atmosphere-NX/Atmosphere/releases/
 curl -sL https://api.github.com/repos/Atmosphere-NX/Atmosphere/releases \
-  | jq -r 'map(select(.prerelease == true)) | .[0].assets[] | select(.name | contains("fusee")).browser_download_url' \
+  | jq -r '.[0].assets[] | select(.name | contains("fusee")).browser_download_url' \
   | xargs -I {} curl -sL {} -o fusee.bin
 if [ $? -ne 0 ]; then
     echo "fusee download\033[31m failed\033[0m."
@@ -86,8 +86,9 @@ else
     rm hekate.zip
 fi
 
-### Fetch Sigpatches from https://hackintendo.com/download/sigpatches
-curl -sL https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/plugins/sigpatches.zip -o sigpatches.zip
+### Fetch Sigpatches(pre-release) from https://hackintendo.com/download/sigpatches
+### TODO: Fetch directly from the hackintendo.com
+curl -sL https://raw.githubusercontent.com/jackeyzzz12138/SwitchScript/main/plugins/sigpatches.zip -o sigpatches.zip
 if [ $? -ne 0 ]; then
     echo "sigpatches download\033[31m failed\033[0m."
 else
@@ -108,15 +109,29 @@ else
 fi
 
 ### Fetch latest Lockpick_RCM.bin
-curl -sL https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/plugins/Lockpick_RCM.zip -o Lockpick_RCM.zip
+curl -sL https://api.github.com/repos/saneki/Lockpick_RCM/releases \
+  | jq '.[0].tag_name' \
+  | xargs -I {} echo Lockpick_RCM {} >> ../description.txt
+curl -sL https://api.github.com/repos/saneki/Lockpick_RCM/releases \
+  | grep -oP '"browser_download_url": "\Khttps://[^"]*Lockpick_RCM.bin"' \
+  | sed 's/"//g' \
+  | xargs -I {} curl -sL {} -o Lockpick_RCM.bin
 if [ $? -ne 0 ]; then
     echo "Lockpick_RCM download\033[31m failed\033[0m."
 else
     echo "Lockpick_RCM download\033[32m success\033[0m."
-    echo Lockpick_RCM v1.9.12 >> ../description.txt
-    unzip -oq Lockpick_RCM.zip
-    rm Lockpick_RCM.zip
+    mv Lockpick_RCM.bin ./bootloader/payloads
 fi
+    
+# curl -sL https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/plugins/Lockpick_RCM.zip -o Lockpick_RCM.zip
+# if [ $? -ne 0 ]; then
+#     echo "Lockpick_RCM download\033[31m failed\033[0m."
+# else
+#     echo "Lockpick_RCM download\033[32m success\033[0m."
+#     echo Lockpick_RCM v1.9.12 >> ../description.txt
+#     unzip -oq Lockpick_RCM.zip
+#     rm Lockpick_RCM.zip
+# fi
 
 ### Fetch latest TegraExplorer.bin form https://github.com/suchmememanyskill/TegraExplorer/releases/latest
 curl -sL https://api.github.com/repos/suchmememanyskill/TegraExplorer/releases/latest \
@@ -163,13 +178,12 @@ else
     mv Switch_90DNS_tester.nro ./switch/Switch_90DNS_tester
 fi
 
-### Fetch lastest DBI from https://github.com/rashevskyv/dbi/releases/latest
-curl -sL https://api.github.com/repos/rashevskyv/dbi/releases/latest \
-  | jq '.name' \
+### Fetch 658 DBI from https://github.com/rashevskyv/dbi/releases
+curl -sL https://api.github.com/repos/rashevskyv/dbi/releases \
+  | jq 'map(select(.tag_name == "658")) | .[0].name' \
   | xargs -I {} echo {} >> ../description.txt
-curl -sL https://api.github.com/repos/rashevskyv/dbi/releases/latest \
-  | grep -oP '"browser_download_url": "\Khttps://[^"]*DBI.nro"' \
-  | sed 's/"//g' \
+curl -sL https://api.github.com/repos/rashevskyv/dbi/releases \
+  | jq 'map(select(.tag_name == "658")) | .[0].assets[] | select(.name | contains("DBI.nro")) | .browser_download_url' \
   | xargs -I {} curl -sL {} -o DBI.nro
 if [ $? -ne 0 ]; then
     echo "DBI download\033[31m failed\033[0m."
