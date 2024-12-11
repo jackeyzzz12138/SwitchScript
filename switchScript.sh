@@ -99,7 +99,7 @@ else
 fi
 
 ### Fetch logo
-curl -sL https://raw.githubusercontent.com/huangqian8/SwitchPlugins/main/theme/logo.zip -o logo.zip
+curl -sL https://raw.githubusercontent.com/jackeyzzz12138/SwitchScript/main/images/logo.zip -o logo.zip
 if [ $? -ne 0 ]; then
     echo "logo download\033[31m failed\033[0m."
 else
@@ -653,6 +653,7 @@ icon=bootloader/res/icon_ams.bmp
 payload=bootloader/payloads/fusee.bin
 
 [CFW (emuMMC)]
+logopath=bootloder/splash_emu.bmp
 emummcforce=1
 fss0=atmosphere/package3
 ;kip1patch=nosigchk
@@ -662,6 +663,7 @@ icon=bootloader/res/icon_Atmosphere_emunand.bmp
 id=cfw-emu
 
 [CFW (sysMMC)]
+logopath=bootloader/splash_sys.bmp
 emummc_force_disable=1
 fss0=atmosphere/package3
 kip1patch=nosigchk
