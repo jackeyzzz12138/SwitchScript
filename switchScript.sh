@@ -448,7 +448,7 @@ kip1patch=nosigchk
 atmosphere=1
 icon=bootloader/res/icon_Atmosphere_emunand.bmp
 id=cfw-emu
-logopath=splash_emu.bmp
+logopath=bootloader/splash_emu.bmp
 
 [CFW (sysMMC)]
 emummc_force_disable=1
@@ -457,7 +457,7 @@ kip1patch=nosigchk
 atmosphere=1
 icon=bootloader/res/icon_Atmosphere_sysnand.bmp
 id=cfw-sys
-logopath=splash_sys.bmp
+logopath=bootloader/splash_sys.bmp
 
 [Stock SysNAND]
 emummc_force_disable=1
@@ -465,7 +465,6 @@ fss0=atmosphere/package3
 icon=bootloader/res/icon_stock.bmp
 stock=1
 id=ofw-sys
-logopath=SwitchHeart.bmp
 ENDOFFILE
 if [ $? -ne 0 ]; then
     echo "Writing hekate_ipl.ini in ./bootloader/ directory\033[31m failed\033[0m."
