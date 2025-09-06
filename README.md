@@ -51,6 +51,7 @@
 
   - 其他
     - [x] 蓝牙手柄插件 `MissionControl` [From Here](https://github.com/ndeadly/MissionControl/releases/latest)
+    - [x] 最新NS固件 `Firmware.xxx` [From Here](https://github.com/THZoria/NX_Firmware/releases/latest)
 
 - 文件操作：
     - [x] 移动 `fusee.bin` 至 `bootloader/payloads` 文件夹

@@ -268,8 +268,8 @@ curl -sL "$download_url" -o ovl-sysmodules.zip&& {
     rm ovl-sysmodules.zip
 } || echo "ovl-sysmodules download\033[31m failed\033[0m."
 
-latest_release_info=$(curl -sL https://api.github.com/repos/zdm65477730/Status-Monitor-Overlay/releases/latest)
-download_url=$(echo "$latest_release_info" | grep -oP '"browser_download_url": "\Khttps://[^"]*StatusMonitor.zip' | sed 's/"//g')
+latest_release_info=$(curl -sL https://api.github.com/repos/masagrator/Status-Monitor-Overlay/releases/latest)
+download_url=$(echo "$latest_release_info" | grep -oP '"browser_download_url": "\Khttps://[^"]*Status-Monitor-Overlay.zip' | sed 's/"//g')
 curl -sL "$download_url" -o StatusMonitor.zip&& {
     echo "StatusMonitor download\033[32m success\033[0m."
     unzip -oq StatusMonitor.zip
@@ -368,6 +368,15 @@ curl -sL "$download_url" -o MissionControl.zip&& {
     rm MissionControl.zip
 } || echo "MissionControl download\033[31m failed\033[0m."
 
+latest_release_info=$(curl -sL https://api.github.com/repos/THZoria/NX_Firmware/releases/latest)
+download_url=$(echo "$latest_release_info" | grep -oP '"browser_download_url": "\Khttps://[^"]*Firmware.*.zip' | sed 's/"//g')
+tag_name=$(echo "$latest_release_info" | grep -oP '"tag_name": "\K[^"]*')
+curl -sL "$download_url" -o Firmware.zip&& {
+    echo "Firmware download\033[32m success\033[0m."
+    unzip -oq Firmware.zip -d ./Firmware.$tag_name
+    rm Firmware.zip
+} || echo "Firmware download\033[31m failed\033[0m."
+
 cat >> ../description.txt << ENDOFFILE
 Atmosphere
 fusee
@@ -408,6 +417,7 @@ sys-patch
 sys-clk
 OC_Toolkit_SC_EOS
 MissionControl
+NX_Firmware
 ENDOFFILE
 
 ### Rename hekate_ctcaer_*.bin to payload.bin
